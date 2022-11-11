@@ -21,7 +21,7 @@ use App\Http\Controllers\RegisterController;
 
 
 
-Route::prefix('/V1')->group(function () {
+Route::prefix('/V1')->middleware('auth:api')->group(function () {
     Route::get('/posts', [V1PostController::class, 'index'])->name('post.index');
     Route::get('/posts/{post}', [V1PostController::class, 'show'])->name('post.show');
     Route::post('/posts', [V1PostController::class, 'store'])->name('post.store');
@@ -40,6 +40,8 @@ Route::prefix('/V2')->group(function () { {
 
 
 Route::post('/register',[RegisterController::class,'register']);
+Route::post('/login',[RegisterController::class,'login']);
+Route::post('/logout',[RegisterController::class,'logout'])->middleware('auth:api');
 
 
 Route::apiResource('/users', UserController::class);
